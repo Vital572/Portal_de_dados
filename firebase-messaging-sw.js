@@ -3,10 +3,10 @@ importScripts("https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js");
 
 firebase.initializeApp({
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_DOMINIO.firebaseapp.com",
-  projectId: "NOME_DO_PROJETO",
-  messagingSenderId: "SEU_SENDER_ID",
+  apiKey: "102524887029",
+  authDomain: "https://portal-de-dados.vercel.app.firebaseapp.com",
+  projectId: "Portal de Dados de Angola",
+  messagingSenderId: "BMYKIODIlW81cUFGC0YFMjyngdLEzqU3-73SYBKbqP7ymtdJVa2JPHkJVnBUFF98KRtlUgRluFV8TX0kEgcAuEs",
   appId: "SEU_APP_ID"
 });
 
