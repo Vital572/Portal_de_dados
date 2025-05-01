@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Site com Notificações</title>
-    <style>
-        .notificacao {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            border-radius: 5px;
-            z-index: 999;
-            font-family: sans-serif;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Enviar Email com Gmail API</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; font-size: 16px; }
+  </style>
 </head>
 <body>
-    adjawdhjadjhawdjhwabdh
-    <h1>Bem-vindo ao nosso site!</h1>
-    <p>Confira abaixo as novidades.</p>
+  <h2>Enviar Email com Gmail API</h2>
+  <button onclick="handleAuthClick()">Login com Google</button>
 
-    <div id="notificacao" class="notificacao">
-        ✅ Nova ferramenta disponível! Clique para saber mais.
-    </div>
+  <form id="emailForm" onsubmit="sendEmail(event)">
+    <input type="text" id="to" placeholder="Para (email)" required />
+    <input type="text" id="subject" placeholder="Assunto" required />
+    <textarea id="message" placeholder="Escreva a mensagem..." rows="6" required></textarea>
+    <button type="submit">Enviar Email</button>
+  </form>
 
-    <script src="script.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
