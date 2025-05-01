@@ -1,22 +1,20 @@
-importScripts("https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging-compat.js");
+// firebase-messaging-sw.js
+importScripts("https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js");
 
 firebase.initializeApp({
-  apiKey: "690478236807",
+  apiKey: "SUA_API_KEY",
   authDomain: "SEU_DOMINIO.firebaseapp.com",
-  projectId: "SEU_PROJETO_ID",
+  projectId: "NOME_DO_PROJETO",
   messagingSenderId: "SEU_SENDER_ID",
-  appId: "SEU_APP_ID",
-  measurementId: "SEU_MEASUREMENT_ID"
+  appId: "SEU_APP_ID"
 });
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
+messaging.onBackgroundMessage((payload) => {
+  self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body,
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
+    icon: "/icon.png"
+  });
 });
