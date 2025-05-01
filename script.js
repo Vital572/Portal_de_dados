@@ -1,28 +1,40 @@
-// Mostrar notificação simples na página
-window.onload = function () {
-    setTimeout(() => {
-        document.getElementById("notificacao").style.display = "block";
-    }, 1500);
-};
+const CLIENT_ID = 'SUA_CLIENT_ID_AQUI';
+const SCOPES = 'https://www.googleapis.com/auth/gmail.send';
 
-// Registrar Service Worker
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(function (reg) {
-        console.log('Service Worker registrado com sucesso:', reg.scope);
-
-        // Pedir permissão para notificações
-        if ("Notification" in window && Notification.permission !== "granted") {
-            Notification.requestPermission().then(function (permission) {
-                if (permission === "granted") {
-                    reg.showNotification("🚀 Nova funcionalidade adicionada ao site!", {
-                        body: "Clique aqui para saber mais.",
-                        icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
-                        tag: "nova-ferramenta"
-                    });
-                }
-            });
-        }
-    }).catch(function (err) {
-        console.error('Erro ao registrar o Service Worker:', err);
+function handleAuthClick() {
+  gapi.load('client:auth2', () => {
+    gapi.auth2.init({ client_id: CLIENT_ID }).then(() => {
+      gapi.auth2.getAuthInstance().signIn().then(() => {
+        gapi.client.load('gmail', 'v1');
+        alert('Autenticado com sucesso!');
+      });
     });
+  });
+}
+
+function sendEmail(event) {
+  event.preventDefault();
+
+  const to = document.getElementById('to').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+
+  const email = `
+To: ${to}
+Subject: ${subject}
+
+${message}
+  `.trim();
+
+  const base64EncodedEmail = btoa(email).replace(/\+/g, '-').replace(/\//g, '_');
+
+  gapi.client.gmail.users.messages.send({
+    userId: 'me',
+    resource: { raw: base64EncodedEmail }
+  }).then(() => {
+    alert('Email enviado com sucesso!');
+  }, error => {
+    console.error(error);
+    alert('Erro ao enviar o email.');
+  });
 }
