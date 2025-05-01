@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel do Usuário</title>
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging.js"></script>
+
+<script>
+  // Configuração do Firebase
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_DOMINIO.firebaseapp.com",
+    projectId: "NOME_DO_PROJETO",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID",
+    measurementId: "SEU_MEASUREMENT_ID"
+  };
+
+  // Inicializar Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const messaging = firebase.messaging();
+
+  // Pedir permissão
+  messaging.requestPermission()
+    .then(() => messaging.getToken({ vapidKey: "SUA_CHAVE_PUBLICA_WEB_PUSH" }))
+    .then((token) => {
+      console.log("Token de notificação:", token);
+      // Você pode salvar esse token no banco ou usar para testes
+    })
+    .catch((err) => {
+      console.error("Permissão negada ou erro:", err);
+    });
+</script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6f2ff;
+      padding: 50px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bem-vindo ao Painel!</h1>
+  <p>Você será notificado sempre que houver atualizações.</p>
+  <button onclick="enviarNotificacao()">Enviar notificação agora</button>
+
+  <script>
+    // Solicita permissão ao usuário
+    document.addEventListener("DOMContentLoaded", () => {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            new Notification("Notificações ativadas com sucesso!");
+          }
+        });
+      }
+    });
+
+    // Envia notificação (poderia ser chamado por um servidor real)
+    function enviarNotificacao() {
+      if (Notification.permission === "granted") {
+        new Notification("🚀 Novidade: Um novo conteúdo foi publicado!");
+      } else {
+        alert("Permita notificações para receber alertas.");
+      }
+    }
+  </script>
+
+</body>
+</html>
